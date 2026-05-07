@@ -10,13 +10,8 @@ from telegram.ext import (
     filters,
 )
 
-# from openai import OpenAI
-# from config import BOT_TOKEN, OPENAI_API_KEY
-
 from config import BOT_TOKEN
 import random
-
-# client = OpenAI(api_key=OPENAI_API_KEY)
 
 # Хранилище игры
 games = {}
@@ -40,15 +35,9 @@ games = {}
 # START
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
-    # keyboard = [
-    #     ["AI 🤖", "Мем 😂"],
-    #     ["Roast 🔥", "Игра 🎮"],
-    #     ["Факт 🧠"],
-    # ]
-    
     keyboard = [
         ["Игра 🎮"],
-        ["Факт 🧠"],
+        ["Факт про Буран 🖥️"],
     ]
 
     markup = ReplyKeyboardMarkup(
@@ -72,46 +61,11 @@ async def start_game(update: Update):
         "Я загадал число от 1 до 10 😈"
     )
 
-
-# AI ответ
-# async def ask_ai(text):
-
-#     response = client.chat.completions.create(
-#         model="gpt-4.1-mini",
-#         messages=[
-#             {
-#                 "role": "system",
-#                 "content": (
-#                     "Ты веселый Telegram-бот. "
-#                     "Отвечай кратко, смешно и дружелюбно."
-#                 ),
-#             },
-#             {
-#                 "role": "user",
-#                 "content": text,
-#             },
-#         ],
-#         max_tokens=150,
-#     )
-
-#     return response.choices[0].message.content
-
-
 # Обработка сообщений
 async def messages(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     text = update.message.text
     user_id = update.message.from_user.id
-
-    # AI
-    # if text == "AI 🤖":
-
-    #     await update.message.reply_text(
-    #         "Напиши мне любой вопрос 😎"
-    #     )
-
-    #     context.user_data["ai_mode"] = True
-    #     return
 
     # Мем
     # elif text == "Мем 😂":
@@ -128,15 +82,15 @@ async def messages(update: Update, context: ContextTypes.DEFAULT_TYPE):
     #     )
 
     # Факт
-    if text == "Факт 🧠":
+    if text == ("Факт про Буран 🖥️"
+                ):
 
         facts = [
-            "У осьминога 3 сердца 🐙",
-            "Банан — это ягода 🍌",
-            "Арахис — это не орех 🥜",
-            "У пчел пять глаз 🐝",
-            "У акул нет ни одной кости 🦈",
-            "На Венере день длится дольше, чем год 👽",
+            "Программа «Буран» называется не в честь орбитального корабля",
+            "Программу «Буран» не использовали при полетах в космос",
+            "У программы есть скрытые функции, о которых никто не знает",
+            "Если вы переместили товар в базе, а он не переместился физически — значит, у вас старая версия реальности",
+            "«Буран» никогда не тормозит. Он просто дает вам время подумать",
         ]
 
         await update.message.reply_text(
@@ -168,24 +122,6 @@ async def messages(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 await update.message.reply_text(
                     "Неа 😁 Попробуй еще."
                 )
-
-    # AI режим
-    # elif context.user_data.get("ai_mode"):
-
-    #     await update.message.reply_text(
-    #         "Думаю... 🤔"
-    #     )
-
-    #     answer = await ask_ai(text)
-
-    #     await update.message.reply_text(answer)
-
-    # else:
-
-    #     await update.message.reply_text(
-    #         "Я тебя не понял 🤖"
-    #     )
-
 
 # Запуск
 app = ApplicationBuilder().token(BOT_TOKEN).build()
